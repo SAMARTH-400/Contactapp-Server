@@ -47,19 +47,19 @@ router.post("/login", async(req, res) => {
   }
   
   try {
-    const User = await User.findOne({ email });
-    if(!User){
+    const ExistingUser = await User.findOne({ email });
+    if(!ExistingUser){
       return res.status(400).json({ error: "Invalid email or password!" });
     }
     const correctPassword = await bcrypt.compare(
       password,
-      User.password
+      ExistingUser.password
     );
     if (!correctPassword){
       return res.status(400).json({ error: "Invalid email or password!" });
     }
     
-    const payload = { _id: User._id };
+    const payload = { _id: ExistingUser._id };
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });

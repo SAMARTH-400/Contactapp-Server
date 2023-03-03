@@ -52,16 +52,11 @@ router.put("/contact", auth, async (req, res) => {
   try {
     const contact = await Contact.findOne({ _id: id });
 
-    if (req.user._id.toString() !== contact.postedBy._id.toString())
-      return res
-        .status(401)
-        .json({ error: "you can't edit other people contacts!" });
-
+    if (req.user._id.toString() !== contact.postedBy._id.toString()){
+      return res.status(401).json({ error: "you can't edit other people contacts!" });
+    }
     const updatedData = { ...req.body, id: undefined };
-    const result = await Contact.findByIdAndUpdate(id, updatedData, {
-      new: true,
-    });
-
+    const result = await Contact.findByIdAndUpdate(id, updatedData, {new: true,} );
     return res.status(200).json({ ...result._doc });
   } catch (err) {
     console.log(err);
