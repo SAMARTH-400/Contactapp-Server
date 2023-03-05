@@ -64,7 +64,7 @@ router.post("/login", async(req, res) => {
       expiresIn: "1h",
     });
 
-    const user = { ...User._doc, password: undefined };
+    const user = { ...ExistingUser._doc, password: undefined };
     return res.status(200).json({ token, user });
   } catch(err){
     console.log(err);

@@ -21,7 +21,7 @@ const Contact = new mongoose.model("Contact", ContactSchema);
 const validateContact = (data) => {
   const schema = Joi.object({
     name: Joi.string().min(4).max(50).required(),
-    phone: Joi.number().min(7).max(10000000000).required(),
+    phone: Joi.number().min(7).max(100000000000).required(),
   });
   return schema.validate(data);
 };
