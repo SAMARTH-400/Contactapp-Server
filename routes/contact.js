@@ -112,4 +112,16 @@ router.get("/contact/:id", auth, async (req, res) => {
   }
 });
 
+router.delete("/deletemany", auth, async (req, res) => {
+    try {
+        const mylist = req.body.list;
+        console.log(mylist);
+        const deleted = await Contact.deleteMany({ _id: { $in: mylist } })
+        return res.status(200).json({ message: `deleted ${deleted.deletedCount} contacts` });
+    } catch (err) {
+        console.log(err);
+        return res.status(400).json({ error: "invalid id/ids" });
+    }
+});
+
 module.exports = router;
